@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>تولدت مبارک محجوبه 🌙</title>
+  <style>
+    body {
+      margin: 0;
+      background: url('assets/images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Vazirmatn', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+    }
+    .overlay {
+      position: relative;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.6);
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+    .element {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      margin: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+    .element:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      max-width: 400px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .message img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    audio {
+      margin-top: 20px;
+    }
+
+    /* استایل برف */
+    #snow {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 5;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- برف اینجا -->
+  <canvas id="snow"></canvas>
+
+  <div class="overlay">
+    <h1>🎂 تولدت مبارک محجوبه‌ی آبی 🌌</h1>
+
+    <div class="element" onclick="toggle('cake')">🍰 کلیک کن روی کیک</div>
+    <div id="cake" class="message hidden">
+      جون کوچولوی من<br>
+      کور رنگی ندارم ولی امروز همه چی یه جور دیگه آبیه<br>
+      تولدت مبارک آبی‌ترینم
+    </div>
+
+    <div class="element" onclick="toggle('gift')">🎁 یه هدیه خاطره‌انگیز</div>
+    <div id="gift" class="message hidden">
+      <img src="assets/images/bowling.jpg" alt="عکس بولینگ" />
+      دلمو که به تاراج بردی، بولینگ هم بردی جونکم 😄<br>
+      (البته لازم به یادآوری که من برات اشتباهی زدم)
+    </div>
+
+    <div class="element" onclick="toggle('star')">🌟 ستاره رو لمس کن</div>
+    <div id="star" class="message hidden">
+      تک‌ستاره‌ی قلبم<br>
+      ان‌شاءالله هرچه زودتر اون خنده‌های قشنگتو کنارم حس کنم<br>
+      و در اسرع وقت به عنوان دسر یام‌یامت کنم 😋
+    </div>
+
+    <div class="element" onclick="toggle('scroll')">📜 یه پیام عاشقانه</div>
+    <div id="scroll" class="message hidden">
+      مرسی که هستی و با بداخلاقی‌هام کنار میای عزیزکم<br>
+      همون‌طور که قبلاً گفتم، رزمنده‌ی جبهتم<br>
+      تو جون بخواه فقط<br>
+      دوستت دارم ❤️<br>
+      — از طرف محجودی
+    </div>
+
+    <audio controls>
+      <source src="assets/audio/voice1.mp3" type="audio/mpeg" />
+      صدای تو قابل پخش نیست :(
+    </audio>
+  </div>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    // انیمیشن برف
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let snowflakes = [];
+
+    function init() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      snowflakes = [];
+      for(let i = 0; i < 100; i++) {
+        snowflakes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 4 + 1,
+          speed: Math.random() * 1 + 0.5,
+          wind: Math.random() * 0.5 - 0.25
+        });
+      }
+    }
+
+    function update() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      for(let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();for(let flake of snowflakes) {
+        flake.y += flake.speed;
+        flake.x += flake.wind;
+        if(flake.y > height) {
+          flake.y = 0;
+          flake.x = Math.random() * width;
+        }
+        if(flake.x > width) {
+          flake.x = 0;
+        } else if(flake.x < 0) {
+          flake.x = width;
+        }
+      }
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('resize', init);
+
+    init();
+    update();
+  </script>
+
+</body>
+</html>
